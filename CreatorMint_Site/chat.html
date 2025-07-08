@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CreatorMint Chatbot</title>
+  <!-- Google Fonts Poppins for consistent styling -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Basic body styling for centering and background */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0fdf6; /* Light green background */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh; /* Ensure body takes full viewport height */
+      box-sizing: border-box; /* Include padding in element's total width and height */
+    }
+    /* Heading styling */
+    h1 {
+      color: #008f5a; /* Dark green heading color */
+      margin-bottom: 1.5rem;
+    }
+    /* Chatbox container styling */
+    #chatbox {
+      width: 100%;
+      max-width: 600px; /* Max width for larger screens */
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Soft shadow */
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem; /* Space between elements */
+    }
+    /* Messages display area */
+    #messages {
+      height: 300px; /* Fixed height for scrollable area */
+      overflow-y: auto; /* Enable vertical scrolling */
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      background: #fafafa; /* Very light gray background for messages */
+      flex-grow: 1; /* Allows messages area to expand */
+      word-wrap: break-word; /* Prevent long words from overflowing */
+    }
+    /* Individual message styling */
+    .message {
+      margin-bottom: 0.75rem; /* Reduced margin for closer messages */
+      line-height: 1.4;
+    }
+    /* User message specific styling */
+    .user {
+      font-weight: bold;
+      color: #00aa6c; /* Bright green for user messages */
+      text-align: right; /* Align user messages to the right */
+    }
+    /* Gemini bot message specific styling */
+    .gemini {
+      color: #333; /* Dark gray for bot messages */
+      text-align: left; /* Align bot messages to the left */
+    }
+    /* Input field and button base styles */
+    input, button {
+      font-family: inherit; /* Inherit font from body */
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      box-sizing: border-box; /* Include padding and border in element's total width and height */
+    }
+    /* Button specific styling */
+    button {
+      background: #00aa6c; /* Bright green button */
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-left: 0.5rem; /* Space from input field */
+      flex-shrink: 0; /* Prevent button from shrinking */
+    }
+    button:hover {
+      background: #007f4e; /* Darker green on hover */
+    }
+    /* Form layout (input and button in a row) */
+    form {
+      display: flex;
+      width: 100%; /* Take full width of parent */
+    }
+    /* User input field to take available space */
+    #user-input {
+      flex-grow: 1;
+    }
+    /* Back button styling */
+    .back-btn {
+      margin-top: 2rem;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      background: #006e45; /* Dark green button */
+      color: white;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: background 0.3s; /* Smooth transition on hover */
+    }
+    .back-btn:hover {
+      background: #004d33; /* Even darker green on hover */
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+      #chatbox {
+        padding: 1rem;
+        border-radius: 0.75rem;
+      }
+      #messages {
+        height: 250px; /* Slightly reduced height on smaller screens */
+        padding: 0.75rem;
+      }
+      input, button {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+      }
+      button {
+        margin-left: 0.25rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Ask the CreatorMint Bot 🤖</h1>
+  <div id="chatbox">
+    <div id="messages"></div>
+    <form id="chat-form">
+      <input type="text" id="user-input" placeholder="Ask about content creation..." required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <!-- Back button to return to the home page -->
+  <a class="back-btn" href="index.html">⬅️ Back to Home</a>
+
+  <script>
+    // Your Gemini API Key - NOTE: For a production app, this should be handled securely on a backend server.
+    const apiKey = "AIzaSyAw2M8EG2Iv1vgpatKFfjOwIy5om3le-SY";
+
+    // Get references to DOM elements
+    const chatForm = document.getElementById("chat-form");
+    const userInput = document.getElementById("user-input");
+    const messages = document.getElementById("messages");
+
+    // Add event listener for form submission
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault(); // Prevent default form submission behavior (page reload)
+
+      const question = userInput.value.trim(); // Get user input and remove whitespace
+      if (!question) return; // If input is empty, do nothing
+
+      // Add user's message to the chat display
+      messages.innerHTML += `<div class='message user'>You: ${question}</div>`;
+      userInput.value = ""; // Clear the input field
+
+      try {
+        // Construct the API URL with the Gemini API endpoint and the API key
+        // UPDATED MODEL: Changed from gemini-1.0 to gemini-2.0-flash
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        // Make a POST request to the Gemini API
+        const res = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json" // Specify content type as JSON
+          },
+          body: JSON.stringify({ // Send user's message in the required format
+            contents: [{
+              role: "user",
+              parts: [{ text: question }]
+            }]
+          })
+        });
+
+        const data = await res.json(); // Parse the JSON response from the API
+        console.log("Gemini raw response:", data); // Log the full API response for debugging
+
+        // Extract the generated text from the API response
+        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (reply) {
+          // If a valid reply is received, add it to the chat display
+          messages.innerHTML += `<div class='message gemini'>Bot: ${reply}</div>`;
+        } else {
+          // If no valid reply, show a generic error message
+          messages.innerHTML += `<div class='message gemini'>Bot: Sorry, I didn't get that. (No valid reply)</div>`;
+        }
+        // Scroll to the bottom of the messages display to show the latest message
+        messages.scrollTop = messages.scrollHeight;
+      } catch (error) {
+        // Catch and log any errors during the API call
+        console.error("Gemini error:", error); // Log the full error object for debugging
+        // Display an error message in the chat if the API call fails
+        messages.innerHTML += `<div class='message gemini'>Bot: ⚠️ Error connecting to Gemini API. Please check console for details.</div>`;
+      }
+    });
+  </script>
+</body>
+</html>

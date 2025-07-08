@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CreatorMint</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for social media icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Basic HTML and body styles for smooth scrolling and font */
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5fdf8; /* Light green background */
+      color: #1a1a1a; /* Dark text color */
+    }
+
+    /* Main content wrapper styles */
+    .main-wrapper {
+      max-width: 1100px;
+      margin: 2rem auto; /* Center the wrapper with margin */
+      background: white;
+      border-radius: 2rem;
+      overflow: hidden; /* Ensures content stays within rounded corners */
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08); /* Soft shadow */
+      animation: floatIn 1s ease-in-out; /* Animation for floating in */
+    }
+
+    /* Keyframe animation for float-in effect */
+    @keyframes floatIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Header styles */
+    header {
+      background-color: #008f5a; /* Dark green header background */
+      color: white;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    /* Logo and title alignment */
+    .logo-title-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Tagline styling */
+    .tagline {
+      font-style: italic;
+      color: #444; /* Dark gray for tagline */
+      background-color: #f8f8f8; /* Very light gray background for tagline */
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      display: inline-block;
+      border-radius: 1rem; /* Rounded corners for tagline background */
+    }
+
+    /* Navigation bar styles */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background-color: #006e45; /* Slightly darker green for nav */
+      padding: 0.75rem;
+      border-bottom: 2px solid #004d33; /* Darker border at bottom */
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s; /* Smooth color transition on hover */
+    }
+    nav a:hover {
+      color: #d1ffeb; /* Lighter green on hover */
+    }
+
+    /* Hero section styles */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1rem;
+      background: #d3ffe3; /* Lightest green for hero section */
+      border-radius: 2rem;
+      margin: 2rem;
+      animation: fadeIn 1.2s ease; /* Fade-in animation */
+    }
+    .hero h1 {
+      margin: 0 0 1rem 0;
+      font-size: 2.8rem;
+      color: #00aa6c; /* Bright green for hero heading */
+      font-weight: 600;
+    }
+
+    /* Keyframe animation for fade-in effect */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Features section styles */
+    .features {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+      gap: 2rem;
+    }
+    .feature {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Soft shadow for features */
+      transition: transform 0.3s ease, box-shadow 0.3s; /* Smooth transitions on hover */
+    }
+    .feature:hover {
+      transform: translateY(-5px); /* Lift effect on hover */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* Enhanced shadow on hover */
+    }
+
+    /* Specific styles for Axel card */
+    .feature#axel-card {
+      text-align: center;
+    }
+    .feature#axel-card img {
+      max-width: 160px;
+      margin-top: 1rem;
+      border-radius: 1rem; /* Rounded image corners */
+    }
+
+    /* Pricing section styles */
+    .pricing {
+      background: #eefaf2; /* Light green background for pricing */
+      padding: 2rem;
+      text-align: center;
+      border-radius: 2rem;
+      margin: 2rem;
+      animation: floatIn 1s ease-in-out; /* Float-in animation */
+    }
+    .plan {
+      background: white;
+      display: inline-block; /* Allows plans to sit next to each other */
+      margin: 1rem;
+      padding: 1.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Soft shadow for plans */
+      transition: transform 0.3s; /* Smooth transform on hover */
+    }
+    .plan:hover {
+      transform: scale(1.03); /* Slightly enlarge on hover */
+    }
+    .plan h3 {
+      font-weight: 700;
+      color: #008f5a; /* Dark green for plan titles */
+    }
+
+    /* Footer styles */
+    footer {
+      background-color: #006e45; /* Dark green for footer */
+      color: white;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem; /* Rounded top corners for footer */
+      display: flex; /* Use flexbox for button layout */
+      flex-direction: column; /* Stack items vertically by default */
+      align-items: center; /* Center items horizontally */
+      gap: 0.75rem; /* Space between elements */
+    }
+
+    /* Styling for the social media buttons */
+    .social-btn {
+      background-color: #008f5a; /* Button background color */
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem; /* Rounded corners for buttons */
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none; /* Remove underline for anchor elements acting as buttons */
+      transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+      display: inline-flex; /* Allow icon and text to be inline */
+      align-items: center;
+      gap: 0.5rem; /* Space between icon and text */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for buttons */
+    }
+
+    .social-btn:hover {
+      background-color: #00aa6c; /* Lighter green on hover */
+      transform: translateY(-2px); /* Slight lift effect */
+    }
+
+    /* Logo image styles */
+    .logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%; /* Circular logo */
+      object-fit: cover; /* Ensures image covers the area */
+    }
+
+    /* Media queries for responsiveness */
+    @media (max-width: 768px) {
+      .main-wrapper {
+        margin: 1rem;
+        border-radius: 1rem;
+      }
+      header {
+        padding: 1rem;
+      }
+      .hero {
+        margin: 1rem;
+        padding: 2rem 1rem;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      nav {
+        flex-direction: column; /* Stack nav links vertically */
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+      nav a {
+        padding: 0.5rem 0;
+      }
+      .features {
+        padding: 1rem;
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+      }
+      .pricing {
+        margin: 1rem;
+        padding: 1rem;
+      }
+      .plan {
+        margin: 0.5rem 0;
+        width: 90%; /* Make plans take more width */
+      }
+      footer {
+        padding: 1.5rem 1rem; /* Adjust footer padding */
+        gap: 0.5rem;
+      }
+      .social-btn {
+        width: 80%; /* Make buttons wider on small screens */
+        justify-content: center; /* Center text within button */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <header>
+      <div class="logo-title-container">
+        <!-- Logo image from a post-image host -->
+        <img class="logo" src="https://i.postimg.cc/JsnwS3HB/Whats-App-Image-2025-06-26-at-09-07-35.jpg" alt="CreatorMint Logo">
+        <h1>CreatorMint</h1>
+      </div>
+      <p class="tagline">Learn. Create. Monetize. Repeat.</p>
+    </header>
+
+    <nav>
+      <!-- Navigation links to different sections and the chatbot page -->
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+      <a href="chat.html">ChatBot</a>
+    </nav>
+
+    <section class="hero">
+      <h1>Empowering Creators with AI</h1>
+      <p>Monetize your content using tools & tricks built for Gen Z 🚀</p>
+    </section>
+
+    <section id="features" class="features">
+      <div class="feature">
+        <h2>Beginner-Friendly Courses</h2>
+        <p>Learn video editing, content scripting, and social media strategy.</p>
+      </div>
+      <div class="feature">
+        <h2>AI Tool Integration</h2>
+        <p>Use ChatGPT, Pictory, and more to boost your productivity.</p>
+      </div>
+      <div class="feature">
+        <h2>Monetization Modules</h2>
+        <p>Master affiliate marketing, brand deals, and creator income streams.</p>
+      </div>
+      <div class="feature" id="axel-card">
+        <h2>Meet Axel</h2>
+        <p>Get guidance from our mascot Axel—your monetization buddy!</p>
+        <!-- Axel image from a post-image host -->
+        <img src="https://i.postimg.cc/NLHjztvw/Whats-App-Image-2025-06-24-at-17-53-45.jpg" alt="Axel the Axolotl Mascot">
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+      <h2>Choose Your Plan</h2>
+      <div class="plan">
+        <h3>Free Tier</h3>
+        <p>10 lessons with ads</p>
+        <strong>₹0/month</strong>
+      </div>
+      <div class="plan">
+        <h3>Plus</h3>
+        <p>Unlimited access, no ads</p>
+        <strong>₹199/month</strong>
+      </div>
+      <div class="plan">
+        <h3>Pro</h3>
+        <p>All Plus features + advising + analytics</p>
+        <strong>₹399/month</strong>
+      </div>
+    </section>
+
+    <section id="team" class="features">
+      <div class="feature">
+        <h2>Meet the Team</h2>
+        <ul>
+          <li><strong>Achintya</strong> – CEO</li>
+          <li><strong>Arnav</strong> – CTO</li>
+          <li><strong>Arabdh</strong> – Content Officer</li>
+          <li><strong>Hiti</strong> – CFO</li>
+          <li><strong>Gunjaa</strong> – Marketing</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <p>© 2025 CreatorMint | Built with 💚 and AI</p>
+      <!-- Social media buttons with Font Awesome icons -->
+      <a href="https://instagram.com/creatormint.official" target="_blank" class="social-btn">
+        <i class="fab fa-instagram"></i> Instagram: @creatormint.official
+      </a>
+      <a href="https://youtube.com/@creatormint.official?si=MLAjjwn_5bOzZxve" target="_blank" class="social-btn">
+        <i class="fab fa-youtube"></i> YouTube: @creatormint.official
+      </a>
+      <a href="https://pin.it/582p2mzFy" target="_blank" class="social-btn">
+        <i class="fab fa-pinterest"></i> Pinterest: pin.it/582p2mzFy
+      </a>
+      <a href="mailto:creatormint.official@gmail.com" class="social-btn">
+        <i class="fas fa-envelope"></i> Email: creatormint.official@gmail.com
+      </a>
+    </footer>
+  </div>
+</body>
+</html>
